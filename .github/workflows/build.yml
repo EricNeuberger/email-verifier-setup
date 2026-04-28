@@ -36,7 +36,7 @@ jobs:
         run: npm run build-win
       
       - name: Upload Windows installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows-installer
           path: dist/EmailVerifier-Setup.exe
@@ -70,7 +70,7 @@ jobs:
         run: npm run build-mac
       
       - name: Upload Mac installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: macos-installer
           path: dist/EmailVerifier.dmg
