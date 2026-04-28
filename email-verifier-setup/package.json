@@ -1,0 +1,51 @@
+{
+  "name": "email-verifier-setup",
+  "version": "2.0.0",
+  "description": "Email Verifier Setup Wizard - One-click installation (includes Node.js)",
+  "main": "main.js",
+  "author": "Investment Banking Club at Boise State University",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win --publish never",
+    "build-mac": "electron-builder --mac --publish never"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "electron": "^latest",
+    "electron-builder": "^latest"
+  },
+  "build": {
+    "appId": "com.emailverifier.setup",
+    "productName": "Email Verifier",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "files": [
+      "main.js",
+      "setup.html",
+      "setup-preload.js",
+      "node-portable/**/*",
+      "email-verifier-electron/**/*"
+    ],
+    "win": {
+      "target": ["nsis"],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Email Verifier"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "assets/icon.icns"
+    }
+  }
+}
