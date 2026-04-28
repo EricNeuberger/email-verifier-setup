@@ -9,68 +9,49 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
       
       - name: Install dependencies
         run: npm install
       
-      - name: Download Node.js portable
-        run: |
-          mkdir node-portable
-          mkdir temp-node
-          $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri 'https://nodejs.org/dist/v18.17.1/node-v18.17.1-win-x64.zip' -OutFile 'temp-node/node.zip'
-          Expand-Archive -Path 'temp-node/node.zip' -DestinationPath 'temp-node' -Force
-          Copy-Item -Path 'temp-node/node-v18.17.1-win-x64/*' -Destination 'node-portable/' -Recurse -Force
-          Remove-Item -Path 'temp-node' -Recurse -Force
-      
       - name: Install electron-builder
-        run: npm install electron-builder --save-dev
+        run: npm install --save-dev electron-builder
       
-      - name: Build Windows installer
+      - name: Build Windows
         run: npm run build-win
       
-      - name: Upload Windows installer
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows-installer
+          name: EmailVerifier-Setup.exe
           path: dist/EmailVerifier-Setup.exe
 
   build-macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
       
       - name: Install dependencies
         run: npm install
       
-      - name: Download Node.js portable
-        run: |
-          mkdir -p node-portable
-          mkdir -p temp-node
-          curl -L https://nodejs.org/dist/v18.17.1/node-v18.17.1-darwin-x64.tar.gz -o temp-node/node.tar.gz
-          tar -xzf temp-node/node.tar.gz -C temp-node
-          cp -r temp-node/node-v18.17.1-darwin-x64/* node-portable/
-          rm -rf temp-node
-      
       - name: Install electron-builder
-        run: npm install electron-builder --save-dev
+        run: npm install --save-dev electron-builder
       
-      - name: Build Mac installer
+      - name: Build Mac
         run: npm run build-mac
       
-      - name: Upload Mac installer
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: macos-installer
+          name: EmailVerifier.dmg
           path: dist/EmailVerifier.dmg
